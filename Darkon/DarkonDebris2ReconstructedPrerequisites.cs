@@ -1,0 +1,53 @@
+/*
+name: Darkon Debris 2 [reconstructed] Prerequisites
+description: Farms the non-boss items to get the Darkon debris 2 [reconstructed], may require some manualing
+tags: darkon, darkon debris 2, prerequisites
+*/
+//cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
+//cs_include Scripts/Darkon/CoreDarkon.cs
+
+using Skua.Core.Interfaces;
+
+public class DarkonDebris2ReconstructedPrerequisites
+{
+    public IScriptInterface Bot => IScriptInterface.Instance;
+    public CoreBots Core => CoreBots.Instance;
+    public CoreFarms Farm = new();
+    public CoreDarkon Darkon = new();
+
+
+    public void ScriptMain(IScriptInterface bot)
+    {
+        Core.SetOptions();
+
+        FarmAll();
+
+        Core.SetOptions(false);
+    }
+
+    public void FarmAll()
+    {
+        if (!Core.CheckInventory("Darkon's Debris 2 (Reconstructed)"))
+        {
+            if (!Core.CheckInventory("Darkon's Debris 2 (Recovered)"))
+            {
+                Darkon.UnfinishedMusicalScore(22);
+                Core.BuyItem("theworld", 2141, "Darkon's Debris 2 (Recovered)");
+            }
+            Darkon.BanditsCorrespondence(22);
+            Darkon.SukisPrestiege(22);
+            Darkon.AncientRemnant(22);
+            Darkon.WheelofFortune(22, 0);
+            if (!Core.CheckInventory("Darkon Insignia", 20))
+            {
+                Core.Logger(" x20 \"Darkon Insignia\" is Required to continue the quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
+                return;
+            }
+            else Core.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
+        }
+    }
+}

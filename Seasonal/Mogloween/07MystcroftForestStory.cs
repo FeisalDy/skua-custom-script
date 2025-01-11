@@ -1,0 +1,27 @@
+/*
+name: Mystcroft Forest Story
+description: This will complete the Mystcroft Forest story quest.
+tags: story, quest, mogloween, seasonal, mystcroft, forest
+*/
+//cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Seasonal/Mogloween/CoreMogloween.cs
+using Skua.Core.Interfaces;
+
+public class MystcroftForest
+{
+    public IScriptInterface Bot => IScriptInterface.Instance;
+    public CoreBots Core => CoreBots.Instance;
+    public CoreStory Story = new();
+    public CoreMogloween CoreMogloween = new();
+
+    public void ScriptMain(IScriptInterface bot)
+    {
+        Core.SetOptions();
+
+        CoreMogloween.MystcroftForest();
+
+        Core.SetOptions(false);
+    }
+
+}

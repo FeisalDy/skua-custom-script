@@ -1,0 +1,25 @@
+/*
+name: Complete 7 Deadly Dragons
+description: This will complete the 7 Deadly Dragons story.
+tags: story, quest, 7-deadly-dragons, complete, all
+*/
+//cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Story/7DeadlyDragons/Core7DD.cs
+using Skua.Core.Interfaces;
+
+public class Complete7DeadlyDragons
+{
+    public IScriptInterface Bot => IScriptInterface.Instance;
+    public CoreBots Core => CoreBots.Instance;
+    public Core7DD DD = new();
+
+    public void ScriptMain(IScriptInterface bot)
+    {
+        Core.SetOptions();
+
+        DD.Complete7DD();
+
+        Core.SetOptions(false);
+    }
+}
