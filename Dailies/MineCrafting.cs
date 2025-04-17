@@ -33,23 +33,22 @@ public class MineCrafting
 
         if (Daily.CheckDailyv2(2091))
         {
-            // if (!Core.CheckInventory("Blinding Light of Destiny", toInv: false))
-            // {
-            //     Core.Logger("Blinding Light of Destiny not owned yet getting metals");
-            //     Daily.MineCrafting(new[] { "Barium", "Copper", "Silver" }, 1, ToBank: true);
-            // }
-            // else if (!Core.CheckInventory("Necrotic Sword of Doom", toInv: false))
-            // {
-            //     Core.Logger("NSoD not owned yet getting metals");
-            //     Daily.MineCrafting(new[] { "Barium" }, 4, ToBank: true);
-            // }
-            // else
-            // {
+            if (!Core.CheckInventory("Blinding Light of Destiny", toInv: false))
+            {
+                Core.Logger("Blinding Light of Destiny not owned yet getting metals");
+                Daily.MineCrafting(new[] { "Barium", "Copper", "Silver" }, 1, ToBank: true);
+            }
+            else if (!Core.CheckInventory("Necrotic Sword of Doom", toInv: false))
+            {
+                Core.Logger("NSoD not owned yet getting metals");
+                Daily.MineCrafting(new[] { "Barium" }, 4, ToBank: true);
+            }
+            else
+            {
                 Core.Logger("BLoD & NSoD owned, getting extra metals.");
-                // Daily.MineCrafting(new[] { "Aluminum", "Barium", "Gold", "Iron", "Copper", "Silver", "Platinum" }, 10, ToBank: true);
+                Daily.MineCrafting(new[] { "Aluminum", "Barium", "Gold", "Iron", "Copper", "Silver", "Platinum" }, 10, ToBank: true);
                 Daily.MineCrafting(new[] { "Iron" }, 10, ToBank: true);
-
-            // }
+            }
         }
         Core.Logger("Finished MineCrafting, Checking HardCore Metals(mem)");
         if (!Core.IsMember || Daily.CheckDailyv2(2090))

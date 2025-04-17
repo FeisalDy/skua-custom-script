@@ -67,7 +67,7 @@ public class FarmAllDailies
             // Daily.DeathKnightLord();
             // Daily.ShadowScytheClass();
             Daily.WheelofDoom();
-            // Daily.FreeDailyBoost();
+            Daily.FreeDailyBoost();
             Daily.CollectorClass();
             // Glac.FrozenTower();
             // Daily.Cryomancer();
@@ -76,19 +76,19 @@ public class FarmAllDailies
             Daily.DagesScrollFragment();
             MineCrafting.DoMinecrafting();
             Daily.CryptoToken();
-            Daily.Friendships();
+            // Daily.Friendships();
             Core.Logger("Recommended Dailies finished!");
         }
         else
         {
             Core.Logger($"Doing selected set of dailies: All");
             LOO.GetLoO();
-            Daily.Pyromancer();
+            // Daily.Pyromancer();
             Daily.DeathKnightLord();
-            Daily.ShadowScytheClass();
+            // Daily.ShadowScytheClass();
             Daily.WheelofDoom();
             Daily.FreeDailyBoost();
-            Daily.CollectorClass();
+            // Daily.CollectorClass();
             Glac.FrozenTower();
             Daily.Cryomancer();
             Daily.EldersBlood();
@@ -102,7 +102,7 @@ public class FarmAllDailies
             Daily.HardCoreMetals(new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Rhodium", "Thorium", "Mercury" }, 10, ToBank: true);
             Daily.GoldenInquisitor();
             Daily.BreakIntotheHoard(false, false);
-            Daily.EldenRuby();
+            // Daily.EldenRuby();
             Daily.NCSGem();
             Daily.MadWeaponSmith();
             Daily.CyserosSuperHammer();

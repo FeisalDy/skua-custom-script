@@ -155,7 +155,8 @@ public class CoreBots
 
         // Common Options
         Bot.Options.PrivateRooms = false;
-        Bot.Options.AttackWithoutTarget = false;
+        //feisal
+        Bot.Options.AttackWithoutTarget = true;
         Bot.Options.SafeTimings = changeTo;
         Bot.Options.RestPackets = changeTo && ShouldRest;
         Bot.Options.AutoRelogin = true;
@@ -334,7 +335,7 @@ public class CoreBots
                     // Bot.Options.CustomGuild = "HTTPS://AUQW.TK/";
 
                     // Holiday Handlers
-                    AprilFools();
+                    // AprilFools();
 
                     //Fucking with specific people
                     UserSpecificMessages();
@@ -3079,6 +3080,7 @@ public class CoreBots
         }
 
         Bot.Options.AttackWithoutTarget = false;
+        // Bot.Options.AttackWithoutTarget = true;
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
@@ -3361,7 +3363,7 @@ public class CoreBots
     /// <param name="isTemp">Whether the item is temporary.</param>
     /// <param name="log">Whether to log the hunt process.</param>
     /// <param name="publicRoom">Whether to use a public room.</param>
-    public void HuntMonster(string map, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
+    public void HuntMonster(string map, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false, bool attackWithoutTarget = false)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
@@ -3431,7 +3433,9 @@ public class CoreBots
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
             }
-            Bot.Options.AttackWithoutTarget = false;
+            // Bot.Options.AttackWithoutTarget = false;
+            Bot.Options.AttackWithoutTarget = attackWithoutTarget;
+
             ToggleAggro(false);
             Bot.Map.Jump(
                 Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter"))
@@ -7206,7 +7210,9 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
-        string[] classesToCheck = new[] { "TimeKeeper", "Verus DoomKnight", "Void Highlord", "Void HighLord (IoDA)", "Yami no Ronin", "ArchPaladin" };
+        // string[] classesToCheck = new[] { "TimeKeeper", "Verus DoomKnight", "Void Highlord", "Void HighLord (IoDA)", "Yami no Ronin", "ArchPaladin" };
+        string[] classesToCheck = new[] { "TimeKeeper", "Void Highlord", "Void HighLord (IoDA)", "Yami no Ronin", "ArchPaladin" };
+
         if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
         {
             Unbank(additionalClass);
@@ -7241,9 +7247,9 @@ public class CoreBots
 
                     case "Void Highlord":
                     case "Void HighLord (IoDA)":
-                    case "Verus DoomKnight":
-                        Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Def);
-                        break;
+                    // case "Verus DoomKnight":
+                    //     Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Def);
+                    //     break;
 
                     case "Yami no Ronin":
                         Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Solo);

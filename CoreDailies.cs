@@ -1008,15 +1008,15 @@ public class CoreDailies
         handleFriendship("Maya", frGift.Chrysanthemums, frGift.Apples);
         handleFriendship("Yulgar", frGift.Turqoise, frGift.Orchids, frGift.Melons);
         handleFriendship("Mi", frGift.Sapphires, frGift.Lilies);
-        handleFriendship("Lord Brentan", frGift.Oranges, frGift.Rubies);
+        // handleFriendship("Lord Brentan", frGift.Oranges, frGift.Rubies);
         handleFriendship("Warlic", frGift.Sapphires, frGift.Sunflowers);
         handleFriendship("Zorbak", frGift.Apples);
-        handleFriendship("Smoglin", frGift.Turqoise, frGift.Apples);
+        // handleFriendship("Smoglin", frGift.Turqoise, frGift.Apples);
 
         // Greyguard
         handleFriendship("Drakath", frGift.Chaos_Diemond);
         handleFriendship("Xang", frGift.Emeralds, frGift.Grapes);
-        handleFriendship("Linus", frGift.A_Fish);
+        // handleFriendship("Linus", frGift.A_Fish);
         handleFriendship("Sally", frGift.Rubies, frGift.Tulips);
         handleFriendship("Xing", frGift.Opals, frGift.Bananas);
 

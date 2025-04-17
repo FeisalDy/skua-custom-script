@@ -322,8 +322,10 @@ public class PotionBuyer
                     GetIngredient(reagent2);
 
                     // if(Bot.Shops.LoadedCache.Find(X=> X.ID == 395))
-                    Adv.BuyItem("alchemyacademy", 395, 62749, 30, 1, 8777);
-                    Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", 30, 8844);
+                    // Adv.BuyItem("alchemyacademy", 395, 62749, 30, 1, 8777);
+                    // Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", 30, 8844);
+                    Adv.BuyItem("alchemyacademy", 395, 61043, 6, 1, 8421);
+                    Adv.BuyItem("alchemyacademy", 395, 7132, 30, 10, 8845);
                     // Adv.BuyItem("alchemyacademy", 395, "Dragon Runestone", 30, 8844);
                     // }
                     Core.Join("alchemy");

@@ -195,7 +195,7 @@ public class CoreNation
     /// </summary>
     /// <param name="item">Desired item to get</param>
     /// <param name="quant">Desired quantity to get</param>
-    public void NewWorldsNewOpportunities(string? item = null, int quant = 1)
+    public void NewWorldsNewOpportunities(string? item = null, int quant = 1, bool KeepVoucher = false)
     {
         if ((item != null && Core.CheckInventory(item, quant)) || (!Core.CheckInventory("Nulgath's Birthday Gift") && !Core.CheckInventory("Bounty Hunter's Drone Pet")))
             return;
@@ -764,12 +764,13 @@ public class CoreNation
     /// <param name="AssistantDuring">Flag indicating if the assistant should be active during the process.</param>
     /// <param name="ReturnItem">Item to return, if any.</param>
     /// <param name="ReturnItemQuant">Quantity of the return item.</param>
-    public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = false, bool KeepVoucher = false, bool AssistantDuring = false, string? ReturnItem = null, int ReturnItemQuant = 1)
+    public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = true, bool KeepVoucher = true, bool AssistantDuring = false, string? ReturnItem = null, int ReturnItemQuant = 1)
     {
         //warning for idiots that wont read it
         Core.Logger("if Swindles is enabled, it will only accept the quest when it has the required Unis it needs");
 
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
+        // bool sellMemVoucher = false;
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
 
         Core.Logger($"Do Return Policy?: {returnPolicyDuringSupplies}");
@@ -842,6 +843,7 @@ public class CoreNation
                                         break;
                                 }
 
+
                                 Bot.Wait.ForPickup("Voucher of Nulgath");
                                 Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
                                 Bot.Wait.ForItemSell();
@@ -911,14 +913,22 @@ public class CoreNation
                     // Sell voucher area
                     if (item != "Voucher of Nulgath" && sellMemVoucher && Core.CheckInventory("Voucher of Nulgath"))
                     {
-                        while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
-                        {
-                            Bot.Combat.CancelTarget();
-                            Bot.Wait.ForCombatExit();
-                            Core.JumpWait();
-                            Core.Sleep();
-                        }
+                        // while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                        // {
+                        //     Bot.Combat.CancelTarget();
+                        //     Bot.Wait.ForCombatExit();
+                        //     Core.JumpWait();
+                        //     Core.Sleep();
+                        // }
 
+                         while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                         {
+                            Core.Jump("Enter", "Spawn");
+                            Core.Sleep();
+                            if (Bot.Player.Cell == "Enter")
+                                break;
+                        }
+                        
                         Bot.Wait.ForPickup("Voucher of Nulgath");
                         Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
                         Bot.Wait.ForItemSell();
@@ -948,7 +958,10 @@ public class CoreNation
 
         Retry:
         Core.ResetQuest(7551);
-        Core.DarkMakaiItem("Dark Makai Rune");
+        if (!Bot.TempInv.Contains("Dark Makai Rune", 1))
+        {
+            Core.DarkMakaiItem("Dark Makai Rune", 13);
+        }
 
         // Try to find the specified reward item, skipping "Receipt of Swindle"
         Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
@@ -976,6 +989,51 @@ public class CoreNation
             Core.EnsureComplete(7551);
         }
     }
+
+    // private void DoSwindlesReturnArea(bool returnPolicyActive, string? item)
+    // {
+    //     if (!returnPolicyActive || !Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
+    //         return;
+
+    //     const int runeCap = 13;
+
+    //     Core.Logger("Loading quest 7551...");
+    //     Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+    //     if (quest == null)
+    //     {
+    //         Core.Logger("Failed to load quest 7551.");
+    //         return;
+    //     }
+
+    //     Core.RegisterQuests(7551); // Accept the quest once
+    //     Core.Logger($"Quest accepted. Now farming {runeCap} Dark Makai Runes...");
+    //     Core.DarkMakaiItem("Dark Makai Rune", runeCap); // Farm to 13
+
+    //     while (Core.CheckInventory("Dark Makai Rune", 1))
+    //     {
+    //         ItemBase? targetReward = quest.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
+    //         int rewardID = targetReward?.ID ??
+    //                     quest.Rewards.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack))?.ID ?? -1;
+
+    //         if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
+    //         {
+    //             Core.Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
+    //             Core.EnsureComplete(7551, rewardID);
+    //         }
+    //         else
+    //         {
+    //             Core.Logger("All rewards maxed or can't complete. Completing with fallback reward ID: -1 (\"Receipt of Swindle\").");
+    //             Core.EnsureComplete(7551);
+    //         }
+
+    //         Bot.Wait.ForPickup("Dark Makai Rune");
+    //     }
+
+    //     Core.Logger("Used all 13 Dark Makai Runes. Farming more...");
+    //     Core.CancelRegisteredQuests(); // Optional: cleanup after done
+    // }
+
+
 
 
     /// <summary>
@@ -1721,7 +1779,7 @@ public class CoreNation
         if (betrayalBlade == null ? Core.CheckInventory("Blood Gem of the Archfiend", quant) : Core.CheckInventory(betrayalBlade))
             return;
 
-        Core.AddDrop(betrayalBlade ?? "Tendurrr The Assistant", "Fragment of Chaos", "Blood Gem of the Archfiend", "Broken Betrayal Blade");
+        Core.AddDrop(betrayalBlade ?? "Tendurrr The Assistant", "Fragment of Chaos", "Blood Gem of the Archfiend", "Broken Betrayal Blade", "Unidentified 10", "Archfiend's Favor");
         Core.EquipClass(ClassType.Farm);
 
         if (betrayalBlade == null)
@@ -1741,15 +1799,28 @@ public class CoreNation
                 Core.JumpWait();
             }
 
-            Core.KillMonster("blindingsnow", "r17", "Left", "*", "Fragment of Chaos", 80, false);
-            Core.KillMonster("evilwarnul", "r13", "Left", "Legion Fenrir", "Broken Betrayal Blade", 8, false);
-            Core.EnsureComplete(3743);
-            Bot.Wait.ForQuestComplete(3743);
+            // Core.KillMonster("blindingsnow", "r17", "Left", "*", "Fragment of Chaos", 80, false);
+            // Core.KillMonster("evilwarnul", "r13", "Left", "Legion Fenrir", "Broken Betrayal Blade", 8, false);
+            Core.KillMonster("blindingsnow", "r17", "Left", "*", "Fragment of Chaos", 640, false);
+            Core.KillMonster("evilwarnul", "r13", "Left", "Legion Fenrir", "Broken Betrayal Blade", 64, false);
+            // Core.EnsureComplete(3743);
+            // Bot.Wait.ForQuestComplete(3743);
+            while (Core.CheckInventory("Fragment of Chaos", 80) && Core.CheckInventory("Broken Betrayal Blade", 8))
+            {
+                Core.EnsureAccept(3743);
+                Core.EnsureComplete(3743);
+                Bot.Wait.ForQuestComplete(3743);
+
+                string reward = betrayalBlade ?? "Blood Gem of the Archfiend";
+                Bot.Wait.ForDrop(reward);
+                Bot.Wait.ForPickup(reward);
+
+                Core.Logger($"Completed x{i++}");
+            }
 
             string itemToPickup = betrayalBlade ?? "Blood Gem of the Archfiend";
             Bot.Wait.ForDrop(itemToPickup);
             Bot.Wait.ForPickup(itemToPickup);
-            Core.Logger($"Completed x{i++}");
 
             if (betrayalBlade == null)
             {

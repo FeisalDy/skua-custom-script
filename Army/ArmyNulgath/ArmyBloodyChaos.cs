@@ -46,8 +46,9 @@ public class ArmyBloodyChaos
 
     public void Setup(Cell mob, int quant = 100)
     {
-        Core.PrivateRooms = true;
-        Core.PrivateRoomNumber = Army.getRoomNr();
+        // Core.PrivateRooms = true;
+        // Core.PrivateRooms = (mob == Cell.h85 || mob == Cell.h90) ? false : true;
+        // Core.PrivateRoomNumber = Army.getRoomNr();
 
         Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
 
@@ -73,6 +74,17 @@ public class ArmyBloodyChaos
             return;
         }
 
+        if (map != "hydrachallenge")
+        {
+            Core.PrivateRooms = true;
+            Core.PrivateRoomNumber = Army.getRoomNr();
+        }
+        else
+        {
+            Core.PrivateRooms = false;
+            Bot.Options.AttackWithoutTarget = true;
+        }
+        
         Army.waitForParty(map);
 
         Core.AddDrop(item);
@@ -172,6 +184,17 @@ public class ArmyBloodyChaos
                 Army.AggroMonMIDs(monsters);
                 Army.AggroMonStart("hydrachallenge");
                 Army.DivideOnCells(Bot.Config!.Get<Cell>("mob") == Cell.h85 ? "h85" : "h90");
+
+                // Pre-farm to 5000 if less than 200
+                if (!Core.CheckInventory(item, 200) && Bot.Map.PlayerCount > 3)
+                {
+                    Core.Logger($"Pre-farming {item} up to 5000 because current amount is less than 200.");
+                    while (!Bot.ShouldExit && !Core.CheckInventory(item, 5000))
+                    {
+                        Bot.Combat.Attack("*");
+                        Core.Sleep();
+                    }
+                }
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                 {
