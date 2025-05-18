@@ -146,21 +146,21 @@ public class UltraSpeakerMergePreReqs
         {
             Core.Logger("Getting prerequisites for 'Goddess Of War' armor...");
             // Prerequisites for acquiring "Goddess Of War" armor
-            UBLOD.PurifiedUndeadDragonEssence(3);
+            // UBLOD.PurifiedUndeadDragonEssence(3);
             // Ice Shard - 43712
-            if (!Core.CheckInventory(43712, 50))
-            {
-                Core.EquipClass(ClassType.Solo);
-                Core.AddDrop(43712);
-                Core.RegisterQuests(6311);
-                while (!Bot.ShouldExit && !Core.CheckInventory(43712, 50))
-                    Core.KillMonster("northmountain", "r7", "Left", "Izotz");
-                Core.CancelRegisteredQuests();
-            }
-            SOWM.DragonsTear();
-            ADG.AscendedGear("Ascended Blade of Awe");
-            DFO.DragonFableOriginsAll();
-            HDK.ADKFalls(true);
+            // if (!Core.CheckInventory(43712, 50))
+            // {
+            //     Core.EquipClass(ClassType.Solo);
+            //     Core.AddDrop(43712);
+            //     Core.RegisterQuests(6311);
+            //     while (!Bot.ShouldExit && !Core.CheckInventory(43712, 50))
+            //         Core.KillMonster("northmountain", "r7", "Left", "Izotz");
+            //     Core.CancelRegisteredQuests();
+            // }
+            // SOWM.DragonsTear();
+            // ADG.AscendedGear("Ascended Blade of Awe");
+            // DFO.DragonFableOriginsAll();
+            // HDK.ADKFalls(true);
             GoddessOfWarPrestigeCloak();
             #region GoddessOfWarPrestigeCloak
             void GoddessOfWarPrestigeCloak()
